@@ -6,6 +6,22 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Room {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  people    People[]
+  createdBy String
+  createdAt DateTime @default(now())
+
+}
+
+model People {
+  name  String
+  email String  @unique @id
+  room  Room[]
+
 }
