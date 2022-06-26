@@ -9,7 +9,7 @@ import GetUserController from "../../database/controllers/users/GetUsersControll
 import { sorter } from "../../utils/sorter";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { room, subtitle } = req.body;
+    const { room, subtitle, emailUser } = req.body;
     const roomGetter = new GetRoomController();
 
     const _room = await roomGetter.get(room);
@@ -17,6 +17,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!_room)
         return res.status(404).send({
             msg: `Sala ${room} não foi encontrada`
+        });
+
+    if (emailUser !== _room.createdBy)
+        return res.status(403).send({
+            msg: `Você não tem permissão para acessar a sala ${room}`
         });
 
     const user = await (new GetUserController()).get(_room.createdBy);
@@ -47,7 +52,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const peoples = sorter(_room.people);
 
-    peoples.forEach(async (person, index) => {
+    await peoples.forEach(async (person, index) => {
+        if (index === (peoples.length - 1))
+            var friend = peoples[0];
+        else
+            var friend = peoples[index + 1];
+
         var emailOptions = {
             from: subtitle,
             to: person.email,
@@ -55,7 +65,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             template: "email",
             context: {
                 name: person.name,
-                friend: "Pedro Augusto",
+                friend: friend.name,
                 room: _room.name,
                 created: user?.name
             }
