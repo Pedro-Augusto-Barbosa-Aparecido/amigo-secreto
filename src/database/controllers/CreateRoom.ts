@@ -3,11 +3,14 @@ import { People, Room } from "../../utils/types";
 
 class RoomCreateController {
     async create (room: Room, person: People) {
-        const _person = await prismaClient.people.findFirst({
+        const _room = await prismaClient.room.findFirst({
             where: {
-                email: person.email
+                name: room.name
             }
         });
+
+        if (_room)
+            return null;
         
         const roomCreated = await prismaClient.room.create({
             data: {
@@ -19,6 +22,7 @@ class RoomCreateController {
                             email: person.email
                         }, 
                         where: {
+                            // @ts-ignore
                             email: person.email
                         }
                     }
