@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import RoomCreateController from "../../../database/controllers/CreateRoom";
+import RoomCreateController from "../../../database/controllers/rooms/CreateRoom";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST")

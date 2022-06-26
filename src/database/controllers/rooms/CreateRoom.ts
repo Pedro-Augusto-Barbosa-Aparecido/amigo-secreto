@@ -1,5 +1,5 @@
-import prismaClient from "../../utils/client";
-import { People, Room } from "../../utils/types";
+import prismaClient from "../../../utils/client";
+import { People, Room } from "../../../utils/types";
 
 class RoomCreateController {
     async create (room: Room, person: People) {

@@ -1,6 +1,5 @@
-import prismaClient from "../../utils/client";
-import { People } from "../../utils/types";
-
+import prismaClient from "../../../utils/client";
+import { People } from "../../../utils/types";
 
 export default class UpdateRoomController {
     async addPerson (room: string, person: People) {
@@ -40,7 +39,6 @@ export default class UpdateRoomController {
             return null;
             
         }
-
     }
 
 }

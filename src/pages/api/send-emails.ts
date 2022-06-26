@@ -1,18 +1,33 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createTransport } from "nodemailer";
-import hbs, { NodemailerExpressHandlebarsOptions } from "nodemailer-express-handlebars";
+
+import GetRoomController from "../../database/controllers/rooms/GetRoomController";
+
+import hbs from "nodemailer-express-handlebars";
 import path from "path";
+import GetUserController from "../../database/controllers/users/GetUsersController";
+import { sorter } from "../../utils/sorter";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { room } = req.body;
+    const { room, subtitle } = req.body;
+    const roomGetter = new GetRoomController();
+
+    const _room = await roomGetter.get(room);
+
+    if (!_room)
+        return res.status(404).send({
+            msg: `Sala ${room} não foi encontrada`
+        });
+
+    const user = await (new GetUserController()).get(_room.createdBy);
 
     const transporter = createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true,
         auth: {
-            user: "pedro007augustobarbosa@gmail.com",
-            pass: "foqipjkagjkngsfp"
+            user: process.env.EMAIL_ADMIN,
+            pass: process.env.PASSWORD
         }
 
     });
@@ -27,27 +42,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         extName: ".html"
     }));
 
-    const emailOptions = {
-        from: "Amigo Secreto R&D",
-        to: "pbarbosaaparecido@gmail.com",
-        subject: "Teste de email",
-        template: "email",
-        context: {
-            name: "Pedro Augusto",
-            friend: "Pedro Augusto",
-            room: ""
-        }
-    }
+    const emailsSuccess: Array<string> = [];
+    const emailsFaileds: Array<string> = [];
 
-    const response = await transporter.sendMail(emailOptions, (err, info) => {
-        if (err) {
-            res.status(500).send({
-                msg: "Erro ao enviar o email"
-            });
-        } else {
-            res.status(200).send({ msg: "Email enviado com sucesso" });
+    const peoples = sorter(_room.people);
+
+    peoples.forEach(async (person, index) => {
+        var emailOptions = {
+            from: subtitle,
+            to: person.email,
+            subject: `Resultado do sorteio do amigo secreto da sala ${room}`,
+            template: "email",
+            context: {
+                name: person.name,
+                friend: "Pedro Augusto",
+                room: _room.name,
+                created: user?.name
+            }
         }
+
+        await transporter.sendMail(emailOptions, (err, info) => {
+            if (err) { 
+                console.log(err);
+                emailsFaileds.push(person.email);
+
+            }
+            else {
+                emailsSuccess.push(person.email)
+
+            }
+        });
+
     });
+    
+    return res.send({
+        success: emailsSuccess,
+        faileds: emailsFaileds 
+    })
 
 }
 
