@@ -8,6 +8,7 @@ export function NavBar () {
                 <Image 
                     className="p-3"
                     src={"/imgs/gift.png"}
+                    alt="gift logo"
                     width={108}
                     height={108}
                 />

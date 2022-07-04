@@ -17,6 +17,7 @@ export default function Login () {
                 src={"/imgs/img-background.png"}
                 layout="fill"
                 objectFit="fill"
+                alt="Background login page, team 7 of naruto"
             />
             <div className="py-10 font-istok-web bg-white absolute w-form-login rounded-nl flex flex-col items-center justify-center right-24 top-14">
                 <span className="text-default font-istok-web">Crie seu grupo e</span>
