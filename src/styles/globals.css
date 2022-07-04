@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --drak-blue: #024DA1;
+    --orange-font: #F05321;
+    --orange-bottom: #ED673D;
+}
