@@ -17,7 +17,7 @@ export default function Login () {
     const [incorrectEmail, setIncorrectEmail] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     
-    const { saveInfo } = useContext(AuthContext);
+    const { saveInfo, setUserInfo } = useContext(AuthContext);
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -33,6 +33,13 @@ export default function Login () {
             if (res.data.success) { 
                 if (rememberMe)
                     saveInfo({
+                        email: email,
+                        name: res.data.user.name,
+                        id: res.data.user.id,
+                        token: res.data.user.token
+                    });
+                else
+                    setUserInfo({
                         email: email,
                         name: res.data.user.name,
                         id: res.data.user.id,

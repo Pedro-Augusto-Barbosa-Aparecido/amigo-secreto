@@ -4,6 +4,7 @@ import React, { createContext, useState } from "react";
 type AuthContextType = {
     user?: UserAuthContextSaveParams | null,
     saveInfo: (_user: UserAuthContextSaveParams) => void
+    setUserInfo: (_user: UserAuthContextSaveParams) => void
 }
 
 type UserAuthContextSaveParams = {
@@ -30,8 +31,10 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
 
     }
 
+    const setUserInfo = (user: UserAuthContextSaveParams) => setUser(user);
+
     return (
-        <AuthContext.Provider value={{ user, saveInfo }}>
+        <AuthContext.Provider value={{ user, saveInfo, setUserInfo }}>
             { children }
         </AuthContext.Provider>
     );
