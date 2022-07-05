@@ -20,7 +20,7 @@ export default class DeleteUserController {
                 }
             });
 
-            if (!!__user) 
+            if (!__user) 
                 return {
                     userNotExist: true,
                     msg: `User with email: ${user.email} not exist!`

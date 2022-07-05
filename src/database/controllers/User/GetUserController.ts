@@ -10,7 +10,8 @@ export type UserGet = {
 export type User = {
     name: string
     id?: string
-    email: string
+    email: string,
+    password: string
 }
 
 export type UserGetReturn = {
@@ -26,17 +27,20 @@ export default class GetUserController {
         try {
             const _user = await prismaClient.user.findFirst({
                 where: {
-                    id: user.id,
-                    email: user.email
+                    OR: {
+                        id: user.id,
+                        email: user.email
+                    }
                 },
                 select: {
                     id: true,
                     name: true,
-                    email: true
+                    email: true,
+                    password: true
                 }
             });
 
-            if (!!_user)
+            if (!_user)
                 return {
                     userNotExist: true,
                     msg: "User not found with success!"
@@ -56,7 +60,6 @@ export default class GetUserController {
                 msg: "Occurred an error on search user specified!"
 
             }
-
         }
     }
 }

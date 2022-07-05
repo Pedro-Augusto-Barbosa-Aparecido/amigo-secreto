@@ -1,9 +1,11 @@
 import prismaClient from "../../../utils/client";
 import { User } from "./GetUserController";
+import bcrypty from "bcryptjs";
 
 export type UserCreate = {
     name: string
-    email: string
+    email: string,
+    password: string
 
 }
 
@@ -32,15 +34,17 @@ export default class CreateUserController {
 
                 }
             }
-
+            const hash = await bcrypty.hash(user.password, 10);
             const __user = await prismaClient.user.create({
                 data: {
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    password: hash
                 },
                 select: {
                     name: true,
                     email: true,
+                    password: true,
                     id: true
                 }
             });

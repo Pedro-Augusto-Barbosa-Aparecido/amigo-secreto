@@ -38,7 +38,11 @@ module.exports = {
         'default': '28px'
       },
       borderWidth: {
-        'sm': '1px'
+        'sm': '1px',
+        'error': '3px'
+      },
+      margin: {
+        '0-5': '1px'
       },
     },
   },
