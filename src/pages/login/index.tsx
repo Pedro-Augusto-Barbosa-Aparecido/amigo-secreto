@@ -17,7 +17,7 @@ export default function Login () {
     const [incorrectEmail, setIncorrectEmail] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     
-    const { saveInfo, setUserInfo } = useContext(AuthContext);
+    const { saveInfo } = useContext(AuthContext);
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -31,20 +31,12 @@ export default function Login () {
 
         api.post("/api/auth/login", user).then((res) => {
             if (res.data.success) { 
-                if (rememberMe)
-                    saveInfo({
-                        email: email,
-                        name: res.data.user.name,
-                        id: res.data.user.id,
-                        token: res.data.user.token
-                    });
-                else
-                    setUserInfo({
-                        email: email,
-                        name: res.data.user.name,
-                        id: res.data.user.id,
-                        token: res.data.user.token
-                    });
+                saveInfo({
+                    email: email,
+                    name: res.data.user.name,
+                    id: res.data.user.id,
+                    token: res.data.user.token
+                });
 
                 Router.push("/");
 

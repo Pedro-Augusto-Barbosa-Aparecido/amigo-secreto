@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
         setCookie(undefined, 'nextauth.token', user.token, { maxAge: TIME_COOKIES });
         setCookie(undefined, 'nextauth.email', user.email, { maxAge: TIME_COOKIES });
         setCookie(undefined, 'nextauth.id', user.id, { maxAge: TIME_COOKIES });
-
         setUser(user);
 
     }
