@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { parseCookies } from "nookies";
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/Auth';
+import Head from "next/head";
 import GetUserController from '../database/controllers/User/GetUserController';
 
 function Home(props: { user: { name: string; email: string; id: string; token: string; } }) {
@@ -20,7 +21,9 @@ function Home(props: { user: { name: string; email: string; id: string; token: s
   }, []);
 
   return (
-    <div>Hello</div>
+    <Head>
+      <title>Amigos secreto de konoha</title>
+    </Head>
   );
 }
 
