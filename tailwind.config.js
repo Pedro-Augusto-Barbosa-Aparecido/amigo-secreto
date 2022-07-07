@@ -8,8 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'just-me': ['Just Me Again Down Here', 'cursive'],
-        'istok-web': ['Istok Web']
+        'just-me': ['Just Me Again Down Here', 'cursive', 'sans-serif'],
+        'istok-web': ['Istok Web', 'sans-serif'],
+        'quick-sand': ['Quicksand', 'sans-serif']
       },
       colors: {
         'dark-blue': {
@@ -18,6 +19,9 @@ module.exports = {
         'dark-orange': {
           600: '#F05321',
           700: '#ED673D'
+        },
+        'gray-back': {
+          400: '#D9D9D926'
         }
       },
       borderRadius: {
@@ -29,7 +33,8 @@ module.exports = {
       height: {
         'img-back': 'calc(100vh - 112px - 48px)',
         'in': '62px',
-        'log': '66px'
+        'log': '66px',
+        'register': 'calc(100vh - 112px)'
       },
       width: {
         'form-login': '482px'
@@ -39,7 +44,8 @@ module.exports = {
       },
       borderWidth: {
         'sm': '1px',
-        'error': '3px'
+        'error': '3px',
+        'st': '10px'
       },
       margin: {
         '0-5': '1px'

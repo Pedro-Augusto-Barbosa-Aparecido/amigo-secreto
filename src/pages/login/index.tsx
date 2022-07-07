@@ -3,40 +3,35 @@ import { api } from "../../api";
 import { TailSpin } from "react-loader-spinner";
 import { AuthContext } from "../../context/Auth";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useForm } from "react-hook-form";
 
 import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";
 import Router from "next/router";
+import Footer from "../../components/Footer";
 
 export default function Login () {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [incorrectPassword, setIncorrectPassword] = useState<boolean>(false);
     const [incorrectEmail, setIncorrectEmail] = useState<boolean>(false);
-    const [rememberMe, setRememberMe] = useState<boolean>(false);
     
+    const { register, handleSubmit } = useForm();
     const { saveInfo } = useContext(AuthContext);
 
-    const handleSubmit = (event: FormEvent) => {
-        event.preventDefault();
+    const handleSign = (data: any) => {
         setIsLoading(true);
-
-        const user = {
-            email,
-            password: password
-
-        }
-
-        api.post("/api/auth/login", user).then((res) => {
+        api.post("/api/auth/login", {
+            email: data.email,
+            password: data.password
+        }).then((res) => {
             if (res.data.success) { 
                 saveInfo({
-                    email: email,
+                    email: data.email,
                     name: res.data.user.name,
                     id: res.data.user.id,
                     token: res.data.user.token
-                });
+                }, data.remember);
 
                 Router.push("/");
 
@@ -78,17 +73,16 @@ export default function Login () {
                 <span className="text-default font-istok-web">Crie seu grupo e</span>
                 <span className="text-dark-orange-600 font-bold text-6xl mt-6 font-istok-web">Divirta-se</span>
                 <span className="text-lg mt-4 font-normal font-istok-web">Já tem Cadastro? Então faça o seu Login!</span>
-                <form onSubmit={handleSubmit} className="w-full px-12">
+                <form onSubmit={handleSubmit(handleSign)} className="w-full px-12">
                     <div>
                         <input 
                             className={classNames(
-                                "w-full border-sm border-black border-solid pl-4 mt-6 rounded-nl placeholder:text-gray-400 h-in placeholder:align-middle",
+                                "border-l-st border-l-dark-orange-600 w-full border-sm border-black border-solid pl-4 mt-6 rounded-nl placeholder:text-gray-400 h-in placeholder:align-middle",
                                 { 'border-red-600': incorrectEmail }
                             )}
+                            {...register('email')}
                             placeholder="Email..."
                             type={"email"}
-                            onChange={ev => setEmail(ev.target.value)}
-                            value={email}
                             id="email"
                             name="email"
                             required
@@ -106,13 +100,12 @@ export default function Login () {
                     <div>
                         <input 
                             className={classNames(
-                                "w-full border-sm border-black border-solid pl-4 mt-6 rounded-nl placeholder:text-gray-400 h-in placeholder:align-middle",
+                                "border-l-st border-l-dark-orange-600 w-full border-sm border-black border-solid pl-4 mt-6 rounded-nl placeholder:text-gray-400 h-in placeholder:align-middle",
                                 { 'border-red-600': incorrectPassword }
                             )} 
                             placeholder="Senha..."
                             type={"password"}
-                            onChange={ev => setPassword(ev.target.value)}
-                            value={password} 
+                            {...register('password')}
                             id="password" 
                             name="password" 
                             required
@@ -133,8 +126,7 @@ export default function Login () {
                         <input 
                             className="w-6 h-6 hover:cursor-pointer active:cursor-default" 
                             type={"checkbox"} 
-                            checked={rememberMe}
-                            onChange={e => setRememberMe(e.target.checked)}
+                            {...register('remember')}
                             id="remember" 
                             name="remember" 
                         />
@@ -154,6 +146,7 @@ export default function Login () {
                     <a className="text-dark-blue-600 font-istok-web font-bold text-2xl mt-4">Cadastrar</a>
                 </Link>
             </div>
+            <Footer />
         </main>
     );
 

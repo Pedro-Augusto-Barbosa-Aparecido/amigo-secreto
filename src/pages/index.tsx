@@ -7,7 +7,6 @@ import GetUserController from '../database/controllers/User/GetUserController';
 
 function Home(props: { user: { name: string; email: string; id: string; token: string; } }) {
   const { setUserInfo, user } = useContext(AuthContext);
-  console.log(user)
   useEffect(() => {
     setUserInfo({ 
       email: props.user.email, 
@@ -15,8 +14,6 @@ function Home(props: { user: { name: string; email: string; id: string; token: s
       id: props.user.id,
       token: props.user.token
     });
-
-    console.log(user);
 
   }, []);
 
