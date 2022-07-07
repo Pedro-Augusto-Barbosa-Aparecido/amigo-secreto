@@ -15,7 +15,7 @@ export function NavBar () {
         setIsRegister(router.pathname.includes("/register"));
         setIsLoggin(router.pathname.includes("/login"));
 
-    }, []);
+    }, [router.pathname]);
 
     return (
         <nav className="bg-white h-28 w-full flex justify-between items-center">

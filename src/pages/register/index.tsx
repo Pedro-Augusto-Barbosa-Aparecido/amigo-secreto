@@ -96,6 +96,7 @@ export default function Register () {
                     layout="fixed"
                     width={560}
                     height={470}
+                    alt={"Time 7 image, anime naruto"}
                     priority
                     
                 />

@@ -15,7 +15,7 @@ function Home(props: { user: { name: string; email: string; id: string; token: s
       token: props.user.token
     });
 
-  }, []);
+  }, [props.user]);
 
   return (
     <Head>
