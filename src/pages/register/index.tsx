@@ -3,20 +3,83 @@ import styles from "./styles.module.css";
 import Image from "next/image";
 import Input from "../../components/Input";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { ImFacebook2 } from "react-icons/im";
+import { api } from "../../api";
+import Spinner from "../../components/Spinner";
+import classNames from "classnames";
+// import { FcGoogle } from "react-icons/fc";
+// import { ImFacebook2 } from "react-icons/im";
 
 export default function Register () {
+    const [emailError, setEmailError] = useState<boolean>(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+    const [confirmEmailErrorMessage, setConfirmEmailErrorMessage] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<boolean>(false);
+    const [nameError, setNameError] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [spinnerMessage, setSpinnerMessage] = useState<string>("");
+
     const { register, handleSubmit } = useForm();
 
     const handleRegister = (data: any) => {
-        console.log(data);
+        if (data.email) {
+            setIsLoading(true);
+            setSpinnerMessage("Verificando formulário");
+            api.post("/api/auth/user/").then(res => {
+                if (res.data.userNotExist) {
+                    setEmailError(true);
+                    setEmailErrorMessage("Email já existe no sistema");
+
+                } else {
+                    if (data.email != data.confirm_email) {
+                        setEmailError(true);
+                        setEmailErrorMessage("Os emails não batem!");
+                    } else
+                        setEmailError(false);
+                }
+
+                // if (!emailError && !passwordError && !nameError) {
+                //     api.post("/api/auth/register", {
+                //         name: data.name,
+                //         email: data.email,
+                //         password: data.password
+                //     });
+
+                // }
+
+            }).finally(() => setIsLoading(false));
+        } else {
+            setEmailError(true);
+            setEmailErrorMessage("Email não pode ser vazio");
+
+        }
+
+        if (!data.confirm_email) {
+            setEmailError(true);
+            setConfirmEmailErrorMessage("Confirme seu email");
+
+        } else {
+            setEmailError(false);
+            setConfirmEmailErrorMessage("");
+
+        }
+        
+        if (!data.password)
+            setPasswordError(true);
+        else
+            setPasswordError(false);
+
+        if (!data.name)
+            setNameError(true);
+        else
+            setNameError(false);
 
     }
 
     return (
         <main className="bg-gray-back-400 h-register w-full">
+            { isLoading && <Spinner messageSpan={spinnerMessage} /> }
             <div className="p-14">
                 <div className="flex">
                     <div className="w-full">
@@ -27,30 +90,6 @@ export default function Register () {
                             Preencha as informações para efetuar o seu cadastro e começar a brincadeira
                         </p>
                     </div>
-                    <div>
-                        <div className="flex flex-col mr-12">
-                            <button className="bg-dark-blue-600 p-3 rounded active:scale-90 hover:opacity-80 transition-opacity">
-                                <div className="flex w-80 items-center justify-start">
-                                    <div className="bg-white p-2 mr-4 rounded">
-                                        <FcGoogle />
-                                    </div>
-                                    <span className="font-black text-lg font-istok-web text-white">
-                                        Inscrever-se com o Google
-                                    </span>
-                                </div>
-                            </button>
-                            <button className="mt-6 bg-dark-blue-600 p-3 rounded active:scale-90 hover:opacity-80 transition-opacity">
-                                <div className="flex w-80 items-center justify-start">
-                                    <div className="bg-white p-2 mr-4 rounded">
-                                        <ImFacebook2 className="text-blue-800 rounded-sm" />
-                                    </div>
-                                    <span className="font-black text-lg font-istok-web text-white">
-                                        Inscrever-se com o Facebook
-                                    </span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
                 </div>
                 <form onSubmit={handleSubmit(handleRegister)}>
                     <Input 
@@ -59,6 +98,8 @@ export default function Register () {
                         id="name"
                         _type="text"
                         label="Nome"
+                        incorrectField={nameError}
+                        errorMessage="O nome não pode ser vazio"
                     />
                     <Input 
                         register={register}
@@ -66,6 +107,8 @@ export default function Register () {
                         id="email"
                         _type="email"
                         label="E-mail"
+                        incorrectField={emailError}
+                        errorMessage={emailErrorMessage}
                     />
                     <Input 
                         register={register}
@@ -73,6 +116,8 @@ export default function Register () {
                         id="confirm_email"
                         _type="email"
                         label="Confirme seu email"
+                        incorrectField={emailError}
+                        errorMessage={confirmEmailErrorMessage || emailErrorMessage}
                     />
                     <Input 
                         register={register}
@@ -80,9 +125,15 @@ export default function Register () {
                         id="password"
                         _type="password"
                         label="Senha"
+                        incorrectField={passwordError}
+                        errorMessage="A senha não pode ser vazia"
                     />
                     <button 
-                        className="font-istok-web pt-3 pb-2 px-12 mt-4 rounded-nl text-default font-bold hover:opacity-90 active:cursor-default active:scale-90 bg-dark-blue-600 text-dark-orange-600"
+                        className={classNames(
+                            "font-istok-web pt-3 pb-2 px-12 mt-4 rounded-nl text-default font-bold disabled:cursor-not-allowed hover:opacity-90 bg-dark-blue-600 text-dark-orange-600"
+                            , { "active:cursor-default active:scale-90": !isLoading }
+                        )}
+                        disabled={isLoading}
                     >
                         Cadastrar
                     </button>

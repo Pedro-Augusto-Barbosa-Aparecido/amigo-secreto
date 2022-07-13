@@ -1,5 +1,7 @@
-import { setCookie } from "nookies";
-import React, { createContext, useState } from "react";
+import Router from "next/router";
+import { parseCookies, setCookie } from "nookies";
+import React, { createContext, useState, useEffect } from "react";
+import { api } from "../../api";
 
 type AuthContextType = {
     user?: UserAuthContextSaveParams | null,
@@ -15,6 +17,12 @@ type UserAuthContextSaveParams = {
     
 }
 
+type GetUserInfoParams = {
+    email: string
+    token: string
+
+}
+
 const TIME_COOKIES_SHORT = 60 * 60 * 24 * 3; // 3 dias
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -24,13 +32,40 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const saveInfo = (user: UserAuthContextSaveParams, remember: boolean) => {
         setCookie(undefined, 'nextauth.token', user.token, { maxAge: remember ? TIME_COOKIES_SHORT : null });
-        setCookie(undefined, 'nextauth.email', user.email, { maxAge: remember ? TIME_COOKIES_SHORT : null });
-        setCookie(undefined, 'nextauth.id', user.id, { maxAge: remember ? TIME_COOKIES_SHORT : null });
         setUser(user);
 
     }
 
     const setUserInfo = (user: UserAuthContextSaveParams) => setUser(user);
+
+    const getUserInfoFromCookies = ({ email, token }: GetUserInfoParams) => {
+        api.post("/api/auth/user/get", {
+            email
+        }).then((res) => {
+            if (res.data.user)
+                setUserInfo({ email, token, name: res.data.user.name, id: res.data.user.id });
+
+            else 
+                Router.push('/login');
+
+        });
+    }
+    
+    useEffect(() => {
+        const { "nextauth.token": token } = parseCookies();
+
+        if (token) {
+            api.post("/api/auth/refresh-user", { token: `Bearer ${token}` }).then((res) => {
+                if (!res.data.user)
+                    Router.push("/login");
+
+                setUser({ ...res.data.user.user, token });
+                
+            });
+
+        }
+
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, saveInfo, setUserInfo }}>

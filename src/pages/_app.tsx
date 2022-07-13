@@ -12,10 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Amigos secreto de konoha</title>
       </Head>
-      <AuthProvider>
-        <NavBar />
-        <Component {...pageProps} />
-      </AuthProvider>
+        <AuthProvider>
+          <NavBar />
+          <Component {...pageProps} />
+        </AuthProvider>
     </>
   );
 }

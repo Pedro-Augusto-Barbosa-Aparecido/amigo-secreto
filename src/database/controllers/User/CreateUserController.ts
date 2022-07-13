@@ -25,7 +25,6 @@ export default class CreateUserController {
                     email: user.email
                 }
             });
-
             if (_user) {
                 return {
                     alreadyExist: true,

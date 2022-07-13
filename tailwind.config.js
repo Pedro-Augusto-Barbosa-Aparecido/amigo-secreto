@@ -16,12 +16,17 @@ module.exports = {
         'dark-blue': {
           600: '#024DA1'
         },
+        'blue-hv': {
+          100: 'rgba(2, 77, 161, 0.17)',
+          200: 'rgba(66,119,178,255)'
+        },
         'dark-orange': {
           600: '#F05321',
           700: '#ED673D'
         },
         'gray-back': {
-          400: '#D9D9D926'
+          400: '#D9D9D926',
+          500: '#F0F0F0'
         }
       },
       borderRadius: {
@@ -34,7 +39,8 @@ module.exports = {
         'img-back': 'calc(100vh - 112px - 48px)',
         'in': '62px',
         'log': '66px',
-        'register': 'calc(100vh - 112px)'
+        'register': 'calc(100vh - 112px)',
+        'with-nav': 'calc(100vh - 112px)'
       },
       width: {
         'form-login': '482px'

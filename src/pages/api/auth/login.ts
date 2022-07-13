@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import GetUserController from "../../../database/controllers/User/GetUserController";
 import bcrypt from "bcryptjs";
-import { v4 as uuid } from "uuid";
+import { sign } from "jsonwebtoken";
 
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
@@ -13,7 +13,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     const { email, password } = req.body; 
 
     const userController = new GetUserController();
-    const user = await userController.get({ email });   
+    const user = await userController.getForLogin({ email });   
     
     if (!user.user)
         return res.status(200).send({
@@ -33,6 +33,11 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
             msg: "Password invalid!"
         });
 
+    const token = sign({}, process.env.TOKEN_KEY || '', {
+        expiresIn: `${60 * 60 * 24 * 5}d`,
+        subject: user.user.id
+    });
+
     return res.status(200).send({
         success: true,
         userNotExist: false,
@@ -40,7 +45,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         user: {
             name: user.user.name,
             id: user.user.id,
-            token: uuid()
+            token
         }
     });
 
