@@ -94,6 +94,7 @@ export function NavBar () {
                                         src={"/imgs/default-login-image.png"}
                                         width={80}
                                         height={80}
+                                        alt={"profile image"}
                                     />
                                     <div className="flex flex-col items-start justify-center">
                                         <span className="text-lg ml-5 font-istok-web">{ user?.name }</span>
