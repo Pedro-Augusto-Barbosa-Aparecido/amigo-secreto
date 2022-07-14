@@ -43,7 +43,7 @@ export default class CreateUserController {
                 select: {
                     name: true,
                     email: true,
-                    password: true,
+                    password: false,
                     id: true
                 }
             });

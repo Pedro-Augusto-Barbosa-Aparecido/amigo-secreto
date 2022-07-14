@@ -7,7 +7,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
     const user = await userController.get({ email });
 
-    if (!user.user)
+    if (user.user)
         return res.send({ userNotExist: true });
     
     return res.send({ userNotExist: false });

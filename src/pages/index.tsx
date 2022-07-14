@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { TailSpin } from 'react-loader-spinner';
 
 import { parseCookies } from 'nookies';
+import { verify } from "jsonwebtoken";
 
 function Home() {
   const { user, saveInfo, setUserInfo } = useContext(AuthContext);
@@ -63,6 +64,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           permanent: false
         }
       }
+
+    try {
+      verify(token, process.env.TOKEN_KEY || "");
+
+    } catch (err) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false
+        }
+      }
+    }
 
     return {
       props: {

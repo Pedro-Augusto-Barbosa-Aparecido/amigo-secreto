@@ -3,16 +3,19 @@ import styles from "./styles.module.css";
 import Image from "next/image";
 import Input from "../../components/Input";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../api";
 import Spinner from "../../components/Spinner";
 import classNames from "classnames";
+import { AuthContext } from "../../context/Auth";
+import Router from "next/router";
 // import { FcGoogle } from "react-icons/fc";
 // import { ImFacebook2 } from "react-icons/im";
 
 export default function Register () {
     const [emailError, setEmailError] = useState<boolean>(false);
+    const [emailConfirmError, setEmailConfirmError] = useState<boolean>(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [confirmEmailErrorMessage, setConfirmEmailErrorMessage] = useState<string>("");
     const [passwordError, setPasswordError] = useState<boolean>(false);
@@ -21,59 +24,101 @@ export default function Register () {
     const [spinnerMessage, setSpinnerMessage] = useState<string>("");
 
     const { register, handleSubmit } = useForm();
+    const { saveInfo } = useContext(AuthContext);
 
     const handleRegister = (data: any) => {
+        setSpinnerMessage("Verificando formulário");
         if (data.email) {
             setIsLoading(true);
-            setSpinnerMessage("Verificando formulário");
-            api.post("/api/auth/user/").then(res => {
+            api.post("/api/auth/user/", { email: data.email }).then(res => {
+                var emailErrorAux = false;
+                var nameErrorAux = false;
+                var passwordErrorAux = false;
                 if (res.data.userNotExist) {
+                    emailErrorAux = true;
                     setEmailError(true);
                     setEmailErrorMessage("Email já existe no sistema");
 
                 } else {
                     if (data.email != data.confirm_email) {
+                        emailErrorAux = true
                         setEmailError(true);
+                        setEmailConfirmError(true);
                         setEmailErrorMessage("Os emails não batem!");
-                    } else
+                    } else {
+                        setEmailConfirmError(false);
                         setEmailError(false);
+                        emailErrorAux = false;
+                    }
                 }
 
-                // if (!emailError && !passwordError && !nameError) {
-                //     api.post("/api/auth/register", {
-                //         name: data.name,
-                //         email: data.email,
-                //         password: data.password
-                //     });
+                if (!data.password) {
+                    setPasswordError(true);
+                    passwordErrorAux = true;
+                
+                } else {
+                    setPasswordError(false);
+                    passwordErrorAux = false;
+                
+                }
+        
+                if (!data.name) {
+                    setNameError(true);
+                    nameErrorAux = true;
 
-                // }
+                } else {
+                    setNameError(false);
+                    nameErrorAux = false;
+                
+                }
+
+                setSpinnerMessage("Cadastrando os dados.");
+                if (!emailErrorAux && !passwordErrorAux && !nameErrorAux) {
+                    api.post("/api/auth/register", {
+                        name: data.name,
+                        email: data.email,
+                        password: data.password
+                    }).then((res) => {
+                        if (!res.data.user) {
+                            alert(res.data.msg);
+                            
+                        } else {
+                            console.log(res.data)
+                            saveInfo({
+                                name: res.data.user.name,
+                                email: res.data.user.email,
+                                id: res.data.user.id,
+                                token: res.data.token
+                            }, false);
+
+                            setIsLoading(false);
+                            Router.push("/");
+
+                        }
+
+                    });
+
+                }
 
             }).finally(() => setIsLoading(false));
-        } else {
+
+        } 
+        
+        if (!data.email) {
             setEmailError(true);
             setEmailErrorMessage("Email não pode ser vazio");
 
         }
 
         if (!data.confirm_email) {
-            setEmailError(true);
+            setEmailConfirmError(true);
             setConfirmEmailErrorMessage("Confirme seu email");
 
         } else {
-            setEmailError(false);
+            setEmailConfirmError(false);
             setConfirmEmailErrorMessage("");
 
         }
-        
-        if (!data.password)
-            setPasswordError(true);
-        else
-            setPasswordError(false);
-
-        if (!data.name)
-            setNameError(true);
-        else
-            setNameError(false);
 
     }
 
@@ -116,7 +161,7 @@ export default function Register () {
                         id="confirm_email"
                         _type="email"
                         label="Confirme seu email"
-                        incorrectField={emailError}
+                        incorrectField={emailConfirmError}
                         errorMessage={confirmEmailErrorMessage || emailErrorMessage}
                     />
                     <Input 
