@@ -41,7 +41,8 @@ module.exports = {
         'log': '66px',
         'register': 'calc(100vh - 112px)',
         'with-nav': 'calc(100vh - 112px)',
-        'tab': '35rem'
+        'tab': '35rem',
+        'item': '80px'
       },
       width: {
         'form-login': '482px'

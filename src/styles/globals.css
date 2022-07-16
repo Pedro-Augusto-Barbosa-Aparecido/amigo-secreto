@@ -15,3 +15,37 @@ span {
    -moz-user-select: none; /* Firefox */
    -ms-user-select: none; /* Internet Explorer/Edge */
 }
+
+body {
+    background-color: #F0F0F0;
+
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 20px;
+    height: 30px;
+
+    background: url("/imgs/calendar3.svg");
+    background-repeat: no-repeat;
+
+    margin: auto;
+    margin-left: 0;
+    margin-right: 0;
+
+    cursor: pointer;
+
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    background: #E8F2FF;
+
+}
+
+div[id=select-custom]::-webkit-scrollbar {
+    width: 10px;
+    border-top-right-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #F05321;
+}
