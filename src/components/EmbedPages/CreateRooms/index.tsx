@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Icon from "../../Icon";
 
 export default function CreateRooms () {
     const [roomTypeSelect, setRoomTypeSelect] = useState<string>("Normal");
