@@ -30,7 +30,8 @@ export default function Login () {
                     email: data.email,
                     name: res.data.user.name,
                     id: res.data.user.id,
-                    token: res.data.user.token
+                    token: res.data.user.token,
+                    avatarUrl: res.data.avatarUrl
                 }, data.remember);
 
                 Router.push("/");
