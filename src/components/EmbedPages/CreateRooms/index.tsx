@@ -13,11 +13,16 @@ export default function CreateRooms () {
 
     const { register, handleSubmit } = useForm();
 
+    const handleCreateRoom = (data: any) => {
+
+
+    }
+
     return (
         <section className="w-full font-istok-web text-white flex flex-col justify-start items-start px-8 py-10 pb-0">
             <h2 className="font-semibold text-5xl">Criar Grupo</h2>
             <p className="text-xl font-thin">Informe os dados do novo grupo que deseja criar</p>
-            <form className="w-1/3 mt-4">
+            <form className="w-1/3 mt-4" onSubmit={handleSubmit(handleCreateRoom)}>
                 <div className="flex flex-col mt-2">
                     <label className="text-xl" htmlFor="roomName">Nome do Grupo<span className="text-red-500">*</span></label>
                     <input 
