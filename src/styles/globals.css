@@ -36,6 +36,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 }
 
+input[type="file"]::-webkit-file-upload-button {
+    background-color: transparent;
+    border: 0;
+
+    cursor: pointer;
+
+}
+
 ::-webkit-scrollbar, ::-webkit-scrollbar-track {
     background: #E8F2FF;
 

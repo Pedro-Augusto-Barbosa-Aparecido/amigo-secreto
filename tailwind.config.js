@@ -58,6 +58,9 @@ module.exports = {
       margin: {
         '0-5': '1px'
       },
+      top: {
+        'pass': '90%'
+      },
     },
   },
   plugins: [],

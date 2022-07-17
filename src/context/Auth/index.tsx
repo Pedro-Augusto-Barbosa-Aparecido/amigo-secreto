@@ -13,6 +13,7 @@ type UserAuthContextSaveParams = {
     name: string
     email: string
     id: string
+    avatarUrl: string
     token: string
     
 }
@@ -37,19 +38,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
     }
 
     const setUserInfo = (user: UserAuthContextSaveParams) => setUser(user);
-
-    const getUserInfoFromCookies = ({ email, token }: GetUserInfoParams) => {
-        api.post("/api/auth/user/get", {
-            email
-        }).then((res) => {
-            if (res.data.user)
-                setUserInfo({ email, token, name: res.data.user.name, id: res.data.user.id });
-
-            else 
-                Router.push('/login');
-
-        });
-    }
     
     useEffect(() => {
         const { "nextauth.token": token } = parseCookies();

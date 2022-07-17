@@ -10,7 +10,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
     const { name, email, password } = req.body; 
     const userController = new CreateUserController();
-    const _user = await userController.create({ name, email, password });
+    const _user = await userController.create({ name, email, password, avatarUrl: "" });
 
     if (_user.err)
         return res.status(500).send({ msg: "Erro ao criar usuário" });

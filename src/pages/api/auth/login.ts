@@ -45,6 +45,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         user: {
             name: user.user.name,
             id: user.user.id,
+            avatarUrl: user.user.avatarUrl,
             token
         }
     });

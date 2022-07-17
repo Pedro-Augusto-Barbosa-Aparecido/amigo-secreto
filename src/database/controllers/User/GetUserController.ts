@@ -11,6 +11,7 @@ export type User = {
     name: string
     id?: string
     email: string
+    avatarUrl?: string | null | undefined
 }
 
 export type UserGetReturn = {
@@ -35,7 +36,8 @@ export default class GetUserController {
                     id: true,
                     name: true,
                     email: true,
-                    password: false
+                    password: false,
+                    avatarUrl: true
                 }
             });
 
@@ -75,7 +77,8 @@ export default class GetUserController {
                     id: true,
                     name: true,
                     email: true,
-                    password: true
+                    password: true,
+                    avatarUrl: true
                 }
             });
 

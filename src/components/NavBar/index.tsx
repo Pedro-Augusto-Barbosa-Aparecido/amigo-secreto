@@ -29,16 +29,18 @@ export function NavBar () {
 
     return (
         <nav className="bg-white h-28 w-full flex justify-between items-center">
-            <div className="flex items-center">
-                <Image 
-                    className="p-3"
-                    src={"/imgs/gift.png"}
-                    alt="gift logo"
-                    width={108}
-                    height={108}
-                />
-                <h1 className="font-just-me text-6xl ml-2 text-black">Amigo Secreto de Konoha</h1>
-            </div>
+            <Link href={"/"}>
+                <div className="flex items-center cursor-pointer active:cursor-default">
+                    <Image 
+                        className="p-3"
+                        src={"/imgs/gift.png"}
+                        alt="gift logo"
+                        width={108}
+                        height={108}
+                    />
+                    <h1 className="font-just-me text-6xl ml-2 text-black">Amigo Secreto de Konoha</h1>
+                </div>
+            </Link>
             <div className="mr-16">
                 { 
                     !user?.token ? 
@@ -91,9 +93,10 @@ export function NavBar () {
                             <div className="w-90 right-0 bg-white mt-7 rounded-b-nl h-fit py-4 absolute shadow-lg">
                                 <div className="flex pb-4 px-4">
                                     <Image 
-                                        src={"/imgs/default-login-image.png"}
+                                        src={user?.avatarUrl ? user?.avatarUrl : "/imgs/default-login-image.png"}
                                         width={80}
                                         height={80}
+                                        className="rounded-full"
                                         alt={"profile image"}
                                     />
                                     <div className="flex flex-col items-start justify-center">
@@ -104,7 +107,9 @@ export function NavBar () {
                                 <hr  />
                                 <div className="p-4 pb-0">
                                     <div className="flex flex-col items-start justify-between">
-                                        <button className="text-xl mb-2">Minha Conta</button>
+                                        <Link href={`/profile/${user.id}`}>
+                                            <a className="text-xl mb-2">Minha Conta</a>
+                                        </Link>
                                         <button className="text-xl mb-2">Meus Grupos</button>
                                         <button className="text-xl">Sair</button>
                                     </div>

@@ -6,6 +6,7 @@ export type UserCreate = {
     name: string
     email: string,
     password: string
+    avatarUrl: string
 
 }
 
@@ -38,12 +39,14 @@ export default class CreateUserController {
                 data: {
                     name: user.name,
                     email: user.email,
-                    password: hash
+                    password: hash,
+                    avatarUrl: user.avatarUrl
                 },
                 select: {
                     name: true,
                     email: true,
                     password: false,
+                    avatarUrl: true,
                     id: true
                 }
             });
