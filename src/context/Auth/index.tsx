@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { parseCookies, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 import React, { createContext, useState, useEffect } from "react";
 import { api } from "../../api";
 
@@ -7,6 +7,7 @@ type AuthContextType = {
     user?: UserAuthContextSaveParams | null,
     saveInfo: (_user: UserAuthContextSaveParams, _remember: boolean) => void
     setUserInfo: (_user: UserAuthContextSaveParams) => void
+    singOut: () => void
 }
 
 type UserAuthContextSaveParams = {
@@ -41,6 +42,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
         setUser(user);
 
     };
+
+    const singOut = () => {
+        setUser(null);
+        destroyCookie(undefined, "nextauth.token");
+
+        Router.push("/login");
+
+    }
     
     useEffect(() => {
         const { "nextauth.token": token } = parseCookies();
@@ -59,7 +68,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, saveInfo, setUserInfo }}>
+        <AuthContext.Provider value={{ user, saveInfo, setUserInfo, singOut }}>
             { children }
         </AuthContext.Provider>
     );

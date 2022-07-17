@@ -143,7 +143,7 @@ export default function Login () {
                 <Link href="/">
                     <a className="text-base text-dark-orange-600 mt-6 font-istok-web">Esqueci minha senha</a>
                 </Link>
-                <Link href="/">
+                <Link href="/register">
                     <a className="text-dark-blue-600 font-istok-web font-bold text-2xl mt-4">Cadastrar</a>
                 </Link>
             </div>

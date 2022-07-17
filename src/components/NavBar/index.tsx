@@ -18,7 +18,7 @@ export function NavBar () {
     const [isRegister, setIsRegister] = useState<boolean>(false);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     
-    const { user } = useContext(AuthContext);
+    const { user, singOut } = useContext(AuthContext);
     const router = useRouter();
 
     useEffect(() => {
@@ -112,7 +112,7 @@ export function NavBar () {
                                             <a className="text-xl mb-2">Minha Conta</a>
                                         </Link>
                                         <button className="text-xl mb-2">Meus Grupos</button>
-                                        <button className="text-xl">Sair</button>
+                                        <button className="text-xl" onClick={singOut}>Sair</button>
                                     </div>
                                 </div>
                             </div>
