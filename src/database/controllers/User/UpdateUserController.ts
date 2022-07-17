@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import prismaClient from "../../../utils/client";
 
 export default class UpdateUserController {
@@ -24,5 +25,33 @@ export default class UpdateUserController {
         }
 
     } 
+
+    updatePassword = async (id: string, newPassword: string) => {
+        try {
+            const hash = await bcrypt.hash(newPassword, 10);
+
+            await prismaClient.user.update({
+                where: {
+                    id
+                },
+                data: {
+                    password: hash
+                }
+            });
+
+            return {
+                success: true
+            }
+
+        } catch (err) {
+            return {
+                success: false,
+                err
+
+            }
+
+        }
+
+    }
     
 }

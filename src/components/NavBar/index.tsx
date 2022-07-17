@@ -85,6 +85,7 @@ export function NavBar () {
                             <HiMenu 
                                 className={classNames("text-5xl", { })}
                                 onClick={() => setMenuOpen(state => !state)}
+                                id="open-dialog"
                                 width={150}
                                 height={150}
                             />

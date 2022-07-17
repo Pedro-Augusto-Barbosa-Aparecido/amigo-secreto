@@ -83,7 +83,6 @@ export default function Register () {
                             alert(res.data.msg);
                             
                         } else {
-                            console.log(res.data)
                             saveInfo({
                                 name: res.data.user.name,
                                 email: res.data.user.email,
