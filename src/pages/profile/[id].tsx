@@ -79,9 +79,7 @@ export default function Profile (props: ProfileProps) {
             <main className="pt-16 px-12">
                 <h1 className="text-5xl text-dark-orange-700">User <span className="text-red-600">{ query.id }</span>, not exist!</h1>
                 <button onClick={
-                    () => {
-                        push("/");
-                    }
+                    () => push("/")
                 } className="py-1 px-4 mt-8 active:scale-90 active:cursor-default hover:opacity-80 bg-dark-orange-700 rounded-lg text-white text-xl font-istok-web font-extrabold">
                     Back to Home
                 </button>
