@@ -11,7 +11,7 @@ export type User = {
     name: string
     id?: string
     email: string
-    avatarUrl?: string | null | undefined
+    avatarUrl?: string | null
 }
 
 export type UserGetReturn = {
@@ -47,7 +47,7 @@ export default class GetUserController {
                     msg: "User not found with success!"
 
                 }
-
+                
             return {
                 userNotExist: false,
                 user: _user,

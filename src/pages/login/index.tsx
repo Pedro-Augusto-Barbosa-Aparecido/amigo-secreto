@@ -31,7 +31,7 @@ export default function Login () {
                     name: res.data.user.name,
                     id: res.data.user.id,
                     token: res.data.user.token,
-                    avatarUrl: res.data.avatarUrl
+                    avatarUrl: res.data.user.avatarUrl
                 }, data.remember);
 
                 Router.push("/");

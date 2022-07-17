@@ -37,11 +37,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] }) => {
 
     }
 
-    const setUserInfo = (user: UserAuthContextSaveParams) => setUser(user);
+    const setUserInfo = (user: UserAuthContextSaveParams) => {
+        setUser(user);
+
+    };
     
     useEffect(() => {
         const { "nextauth.token": token } = parseCookies();
-
+ 
         if (token) {
             api.post("/api/auth/refresh-user", { token: `Bearer ${token}` }).then((res) => {
                 if (!res.data.user)

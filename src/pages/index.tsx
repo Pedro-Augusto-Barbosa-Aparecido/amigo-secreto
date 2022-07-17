@@ -15,7 +15,7 @@ import CreateRooms from '../components/EmbedPages/CreateRooms';
 import SearchRooms from '../components/EmbedPages/SearchRooms';
 
 function Home() {
-  const { user, saveInfo, setUserInfo } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { isReady } = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
