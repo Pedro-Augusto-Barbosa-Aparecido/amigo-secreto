@@ -12,8 +12,15 @@ import styles from "../register/styles.module.css";
 import classNames from "classnames";
 import Spinner from "../../components/Spinner";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import GetUserController from "../../database/controllers/User/GetUserController";
 
-export default function Profile () {
+export interface ProfileProps {
+    userExist: boolean
+
+}
+
+export default function Profile (props: ProfileProps) {
     const { user, setUserInfo } = useContext(AuthContext);
 
     const [fileUpload, setFileUpload] = useState<any | null | undefined>("");
@@ -51,17 +58,35 @@ export default function Profile () {
                         if (!res.data.success)
                             alert(res.data.err.msg);
 
-
                     }).catch((err) => {
                         console.log(err);
                     }).finally(() => {
                         setShowSpinner(false);
+                        setUploadButtonShow(false);
 
                     });
                 });
             });
 
         }
+
+    }
+
+    if (!props.userExist) {
+        const { query, push } = useRouter();
+
+        return (
+            <main className="pt-16 px-12">
+                <h1 className="text-5xl text-dark-orange-700">User <span className="text-red-600">{ query.id }</span>, not exist!</h1>
+                <button onClick={
+                    () => {
+                        push("/");
+                    }
+                } className="py-1 px-4 mt-8 active:scale-90 active:cursor-default hover:opacity-80 bg-dark-orange-700 rounded-lg text-white text-xl font-istok-web font-extrabold">
+                    Back to Home
+                </button>
+            </main>
+        );
 
     }
 
@@ -121,7 +146,7 @@ export default function Profile () {
                         Upload Image
                     </button>                     
                 </div>
-                <section className="flex flex-col mt-8">
+                <section className="flex flex-col mt-8 cursor-text">
                     <span className="text-2xl font-istok-web text-dark-orange-700">Nome</span>
                     <span className="text-lg text-black font-normal font-istok-web">{ user?.name }</span>
                     <span className="text-2xl font-istok-web text-dark-orange-700 mt-4">Email</span>
@@ -146,5 +171,30 @@ export default function Profile () {
             </span>
         </div>
     );
+
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { id } = ctx.query;   
+    const userController = new GetUserController();
+
+    const user = await userController.get({ id: id?.toString() });
+
+    if (user.userNotExist) {
+        return {
+            props: {
+                userExist: false
+            }
+
+        }
+
+    }
+
+    return {
+        props: {
+            userExist: true
+        }
+
+    }
 
 }
