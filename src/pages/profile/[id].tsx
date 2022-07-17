@@ -22,6 +22,7 @@ export interface ProfileProps {
 
 export default function Profile (props: ProfileProps) {
     const { user, setUserInfo } = useContext(AuthContext);
+    const { query, push } = useRouter();
 
     const [fileUpload, setFileUpload] = useState<any | null | undefined>("");
     const [messageSpinner, setMessageSpinner] = useState<string>("");
@@ -73,8 +74,6 @@ export default function Profile (props: ProfileProps) {
     }
 
     if (!props.userExist) {
-        const { query, push } = useRouter();
-
         return (
             <main className="pt-16 px-12">
                 <h1 className="text-5xl text-dark-orange-700">User <span className="text-red-600">{ query.id }</span>, not exist!</h1>
