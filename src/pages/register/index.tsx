@@ -88,7 +88,8 @@ export default function Register () {
                                 name: res.data.user.name,
                                 email: res.data.user.email,
                                 id: res.data.user.id,
-                                token: res.data.token
+                                token: res.data.token,
+                                avatarUrl: res.data.avatarUrl
                             }, false);
 
                             setIsLoading(false);
