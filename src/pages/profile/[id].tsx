@@ -173,7 +173,7 @@ export default function Profile (props: ProfileProps) {
                     <button
                         className={
                             classNames(
-                                "py-1 px-4 ml-8 active:scale-90 active:cursor-default hover:opacity-80 bg-dark-orange-700 rounded-lg text-white text-xl font-istok-web font-extrabold",
+                                "py-1 px-4 ml-16 active:scale-90 active:cursor-default hover:opacity-80 bg-dark-orange-700 rounded-lg text-white text-xl font-istok-web font-extrabold",
                                 { "hidden": props.user?.id != user?.id }
                             )
                         }
@@ -213,7 +213,7 @@ export default function Profile (props: ProfileProps) {
                 </section>
                 <div className={
                     classNames(
-                        "mt-12",
+                        "mt-24",
                         { "hidden": props.user?.id != user?.id }
                     )
                 }>
