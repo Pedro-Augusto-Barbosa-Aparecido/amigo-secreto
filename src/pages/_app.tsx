@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property='og:type' content='website' />
         <meta property='og:title' content='Konan Amigo Secreto' />
         <meta property='og:description' content={`Venha brincar com seus amigos no velho amigo secreto!`} />
-        <meta property='og:image' content="/imgs/img-background.png" />
+        <meta property='og:image' content="https://konan.vercel.app/_next/image?url=%2Fimgs%2Fimg-background.png&w=1920&q=75" />
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content="700" />
         <meta property='og:locale' content="pt_BR" />
