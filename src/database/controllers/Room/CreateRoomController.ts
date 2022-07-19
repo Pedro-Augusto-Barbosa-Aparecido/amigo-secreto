@@ -28,7 +28,7 @@ export default class CreateRoomController {
                     name: room.roomName,
                     roomType: room.typeRoom,
                     createdBy: room.createdBy,
-                    sorterDate: room.dateSorter
+                    sorterDate: new Date(room.dateSorter)
                 }
             });
 
