@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content="700" />
         <meta property='og:locale' content="pt_BR" />
-        <meta property='og:url' content={`https://Konan.vercel.app/room/register-me`} />
+        <meta property='og:url' content={`https://Konan.vercel.app/`} />
         <meta property='og:site_name' content='Konan' />
         <title>Amigos secreto de konoha</title>
       </Head>

@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Head from "next/head";
+import Router from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RiArrowDropDownLine, RiErrorWarningLine } from "react-icons/ri";
@@ -15,6 +16,7 @@ export default function CreateRooms () {
     const [roomNameError, setRoomNameError] = useState<boolean>(false);
     const [roomHasCreated, setRoomHasCreated] = useState<boolean>(false);
     const [roomName, setRoomName] = useState<string>("");
+    const [dateSorter, setDateSorter] = useState<string>("");
     const [typeOptions, setTypeOptions] = useState<string[]>([
         "Amigo Chocolate",
         "Normal", 
@@ -57,29 +59,25 @@ export default function CreateRooms () {
             }
 
             setRoomHasCreated(true);
+            setRoomName(data.roomName);
+            setDateSorter(data.datepicker);
 
         }).finally(() => setShowSpinner(false));
 
     }
 
     const sendWhatsZapInvite = () => {
+        const WHATSAPP_URL = "https://api.whatsapp.com/";
+        const message = `Venha participar do amigo secreto criado por ${user?.name} criou para se divertir com os amigos, para participar clique nesse link: https://konan.vercel.app/rooms/register-me/${roomName.replaceAll(' ', '-')} !! O amigo secreto é do tipo ${roomTypeSelect}. O sorteio irá acontecer ${dateSorter}`;
 
+        const messageEncoded = encodeURIComponent(message);
+
+        Router.push(`${WHATSAPP_URL}send?text=${messageEncoded}`);
 
     }
 
     return (
         <>  
-            <Head>
-                <meta property='og:type' content='website' />
-                <meta property='og:title' content='Konan Amigo Secreto' />
-                <meta property='og:description' content={`Venha brincar com seus amigos no velho amigo secreto! ${user?.name} está te convidando.`} />
-                <meta property='og:image' content="" />
-                <meta property='og:image:width' content='' />
-                <meta property='og:image:height' content="" />
-                <meta property='og:locale' content="pt_BR" />
-                <meta property='og:url' content={`https://Konan.vercel.app/room/register-me/${roomName}`} />
-                <meta property='og:site_name' content='Konan' />
-            </Head>
             <section className="w-full h-full font-istok-web text-white flex flex-col justify-start items-start px-8 py-10 pb-0">
                 <div
                     className={
@@ -210,6 +208,7 @@ export default function CreateRooms () {
                     </div>
                     <button
                         className="hover:opacity-80 active:scale-95 active:cursor-default py-1 px-8 bg-dark-orange-600 mt-16 text-xl font-istok-web font-semibold rounded-nl"
+                        onClick={sendWhatsZapInvite}
                     >
                         Convidar Amigos
                     </button>
