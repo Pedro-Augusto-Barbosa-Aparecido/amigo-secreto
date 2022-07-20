@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app';
 import { NavBar } from '../components/NavBar';
 import { AuthProvider } from '../context/Auth';
 
+import NextNProgress from 'nextjs-progressbar';
+
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -22,6 +24,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Amigos secreto de konoha</title>
       </Head>
       <AuthProvider>
+        <NextNProgress
+            color="#29D"
+            startPosition={0.3}
+            stopDelayMs={200}
+            height={3}
+            showOnShallow={true}
+        />
         <NavBar />
         <Component {...pageProps} />
       </AuthProvider>
