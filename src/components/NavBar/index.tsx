@@ -91,7 +91,7 @@ export function NavBar () {
                             />
                         </Dialog.Trigger>
                         <Dialog.Content>
-                            <div className="w-90 right-0 bg-white mt-7 rounded-b-nl h-fit py-4 absolute shadow-lg">
+                            <div className="w-90 right-0 z-50 bg-white mt-7 rounded-b-nl h-fit py-4 absolute shadow-lg">
                                 <div className="flex pb-4 px-4">
                                     <Image 
                                         src={user?.avatarUrl ? user?.avatarUrl : "/imgs/default-login-image.png"}
