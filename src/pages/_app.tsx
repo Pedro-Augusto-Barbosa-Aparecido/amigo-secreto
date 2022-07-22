@@ -25,10 +25,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <AuthProvider>
         <NextNProgress
-            color="#29D"
+            color="#F05321"
             startPosition={0.3}
             stopDelayMs={200}
-            height={3}
+            height={10}
             showOnShallow={true}
         />
         <NavBar />

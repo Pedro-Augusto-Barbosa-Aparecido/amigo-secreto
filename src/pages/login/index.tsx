@@ -1,9 +1,12 @@
-import { FormEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { api } from "../../api";
 import { TailSpin } from "react-loader-spinner";
 import { AuthContext } from "../../context/Auth";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useForm } from "react-hook-form";
+import { GetServerSideProps } from "next";
+import { verify } from "jsonwebtoken";
+import { parseCookies } from "nookies";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -150,5 +153,23 @@ export default function Login () {
             <Footer />
         </main>
     );
+
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'nextauth.token': token } = await parseCookies(ctx);
+
+    if (token)
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+
+    return {
+      props: {
+      }
+    }    
 
 }

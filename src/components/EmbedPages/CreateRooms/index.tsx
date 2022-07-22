@@ -207,7 +207,7 @@ export default function CreateRooms () {
                         <span className="text-dark-orange-600 leading-10 m-0 p-0 ml-2">DIVIRTA-SE</span>
                     </div>
                     <button
-                        className="hover:opacity-80 active:scale-95 active:cursor-default py-1 px-8 bg-dark-orange-600 mt-16 text-xl font-istok-web font-semibold rounded-nl"
+                        className="hover:opacity-80 active:scale-95 active:cursor-default shadow-gray-back-200 shadow-md py-2 px-8 bg-dark-orange-600 mt-16 text-xl font-istok-web font-semibold rounded-nl"
                         onClick={sendWhatsZapInvite}
                     >
                         Convidar Amigos
