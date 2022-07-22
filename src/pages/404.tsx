@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { IoMdArrowRoundForward } from "react-icons/io";
+
 export default function NotFoundPage () {
     return (
         <main className="w-full h-with-nav">
@@ -19,11 +21,17 @@ export default function NotFoundPage () {
                     <p className="text-3xl w-5/12">
                         Desculpe por esse incômodo. Porém está parte que você tentou acessar não está disponivel ou não foi encontrada no sistema.
                     </p>
-                    <Link href="/">
-                        <a className="mt-24 py-4 pl-8 hover:underline bg-gray-200 bg-opacity-10 font-normal  hover:bg-opacity-80 active:cursor-default hover:bg-gray-back-400 rounded text-md w-2/12">
-                            Voltar para página inicial.
-                        </a>
-                    </Link>
+                    <div className="flex hover:cursor-pointer items-center mt-24 py-4 pl-8 hover:underline bg-gray-200 bg-opacity-10 font-normal  hover:bg-opacity-80 active:cursor-default hover:bg-gray-back-400 rounded text-md w-2/12">
+                        <Link href="/">
+                            <a>
+                                Voltar para página inicial.
+                            </a>
+                        </Link>
+                        <IoMdArrowRoundForward 
+                            color="white"
+                            className="ml-8 text-2xl"
+                        />
+                    </div>
                 </div>
             </div>
         </main>
