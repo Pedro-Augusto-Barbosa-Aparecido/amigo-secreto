@@ -31,8 +31,8 @@ function CardComponent (props: CardProps) {
             </div>
             <div className="overflow-hidden flex flex-col justify-start items-start p-4">
                 <div className="font-istok-web font-normal flex items-center justify-start w-full">
-                    <p className="w-fit mr-2 font-bold text-dark-orange-600">Nome do Grupo: </p>
-                    <p className="overflow-hidden text-ellipsis">{ props.name }</p>
+                    <p className="w-fit inline-block overflow-hidden text-ellipsis whitespace-nowrap mr-2 font-bold text-dark-orange-600">Nome do Grupo: </p>
+                    <p className="block whitespace-nowrap overflow-hidden text-ellipsis">{ props.name }</p>
                 </div>
                 <div className="flex items-center justify-start w-full">
                     <p className="w-fit mr-2 font-bold text-dark-orange-600">Tipo: </p>

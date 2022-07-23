@@ -52,7 +52,7 @@ function Home() {
       <Head>
         <title>Amigos secreto de konoha</title>
       </Head>
-      <main className='bg-gray-back-500'>
+      <main className=''>
           <div className='px-32 pt-16'>
             <h1 className='text-5xl font-istok-web text-dark-orange-600 font-bold'>Meus grupos</h1>
             <span className='text-2xl font-semibold'>Crie seu grupo ou participe de um</span>

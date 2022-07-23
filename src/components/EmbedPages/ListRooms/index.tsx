@@ -18,8 +18,15 @@ interface RoomProps {
 
 export default function ListRooms () {
     const [rooms, setRooms] = useState<RoomProps[]>([]);
+    const [totalRooms, setTotalRooms] = useState<RoomProps[]>([]);
     const [spinnerMessage, setSpinnerMessage] = useState<string>("Buscando suas salas ou que apenas participa");
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [totalPage, setTotalPage] = useState<number>(totalRooms.length);
+    const [availableNext, setAvailableNext] = useState<boolean>(false);
+    const [availablePrevious, setAvailablePrevious] = useState<boolean>(false);
     const [showSpinner, setShowSpinner] = useState<boolean>(true);
+
+    const ROOMS_PER_PAGE = 6;
     
     const { user } = useContext(AuthContext);
 
@@ -32,15 +39,53 @@ export default function ListRooms () {
             email: user?.email,
             userId: user?.id
         }).then((res) => {
-            // if (res.data.success && (res.data.total > 0)) {
-                setRooms(res.data.rooms.slice(0, 6));
-                console.log(res)
-                console.log(rooms)
+            if (res.data.success) {
+                setTotalRooms(res.data.rooms);
+                
+            }
 
-            // }
+            
         }).finally(() => setShowSpinner(false));
 
     }, []);
+
+    useEffect(() => {
+        setAvailablePrevious(false);
+        setCurrentPage(0);
+        setTotalPage(Math.ceil(totalRooms.length / 6));
+
+        if (Math.ceil(totalRooms.length / 6) === 1) 
+            setAvailableNext(false);
+        else
+            setAvailableNext(true);
+
+        setRooms(totalRooms.slice(currentPage, ((currentPage + 1) * ROOMS_PER_PAGE)));
+
+    }, [totalRooms]);
+
+    const changePage = (button: "previous" | "next") => {
+        if (button == "next") {
+            setRooms(totalRooms.slice(((currentPage + 1) * ROOMS_PER_PAGE), ((currentPage + 2) * ROOMS_PER_PAGE)));
+            setCurrentPage(current => current + 1);
+            setAvailablePrevious(true);
+
+            if (((currentPage + 2) * ROOMS_PER_PAGE) > totalRooms.length)
+                setAvailableNext(false);
+
+        } else if (button == "previous") {
+            setRooms(totalRooms.slice(((currentPage - 1) * ROOMS_PER_PAGE), ((currentPage) * ROOMS_PER_PAGE)));
+            setCurrentPage(current => current - 1);
+            setAvailableNext(true);
+
+            if ((currentPage - 1) === 0)
+                setAvailablePrevious(false);
+
+        } else {
+            throw new Error("Incorrect button!!");
+
+        }
+
+    }
 
     return (
         <section className="text-white relative font-istok-web flex flex-col items-center justify-center w-full h-full">
@@ -73,7 +118,17 @@ export default function ListRooms () {
                     { "hidden": (rooms.length == 0) }
                 )
             }>
-                <div className="h-full z-10 absolute text-5xl flex items-center hover:bg-black">
+                <div 
+                    className={
+                        classNames(
+                            "h-full z-10 absolute text-5xl flex items-center left-0 hover:opacity-80 cursor-pointer active:scale-90 active:cursor-default",
+                            { "hidden": !availablePrevious }
+                        )
+                    }
+                    onClick={() => {
+                        changePage("previous");
+                    }}
+                >
                     <MdArrowBackIosNew />
                 </div>
                 {
@@ -88,7 +143,20 @@ export default function ListRooms () {
                         />
                     })
                 }
-                <div className="h-full z-10 absolute text-5xl flex items-center right-0 hover:bg-black">
+                <div className="absolute z-20 -bottom-10 left-12 flex text-lg font-istok-web text-black items-center">
+                    <p className="mr-4">Página atual: { currentPage + 1 }</p>
+                    <span className="mr-4">&diams;</span>
+                    <p className="">Total de salas: { totalRooms.length }</p>
+                </div>
+                <div 
+                    className={
+                        classNames(
+                            "h-full z-10 absolute text-5xl flex items-center right-0 hover:opacity-80 cursor-pointer active:scale-90 active:cursor-default",
+                            { "hidden": !availableNext }
+                        )
+                    }
+                    onClick={() => changePage("next")}
+                >
                     <MdOutlineArrowForwardIos />
                 </div>
             </div>
