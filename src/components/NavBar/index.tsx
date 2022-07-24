@@ -22,7 +22,7 @@ export function NavBar () {
     const router = useRouter();
 
     useEffect(() => {
-        setIsRegister(router.pathname.includes("/register"));
+        setIsRegister(router.pathname.includes(`/register`) && !router.pathname.includes(`/register-me`));
         setIsLoggin(router.pathname.includes("/login"));
 
     }, [router.pathname]);
@@ -45,7 +45,7 @@ export function NavBar () {
                 { 
                     !user?.token ? 
                     <>
-                        <Link href="/register" >
+                        <Link href="/register/" >
                             <a 
                                 className={classNames(
                                     "font-istok-web pt-3 pb-2 px-12 mr-4 rounded-nl text-default font-bold hover:opacity-90 active:cursor-default active:scale-90",
