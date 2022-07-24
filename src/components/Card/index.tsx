@@ -14,7 +14,7 @@ export interface CardProps {
 
 function CardComponent (props: CardProps) {
     const formatDate = (date: Date): string => {
-        return `${date.getDay().toString().padStart(2, '0')}/${date.getMonth().toString().padStart(2, '0')}/${date.getFullYear()}`
+        return `${date.getUTCDate().toString().padStart(2, '0')}/${(date.getUTCMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`
 
     }
 
