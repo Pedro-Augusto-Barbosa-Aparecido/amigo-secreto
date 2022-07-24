@@ -132,6 +132,15 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
                       name={props.room.createdBy.name}
                       isCreator
                     />
+                    {
+                      props.room.people.map(person => {
+                        return <MemberCard
+                          name={person.name}
+                          key={person.id}
+                        />
+
+                      })
+                    }
                   </div>
                 </section>
               }
