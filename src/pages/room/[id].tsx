@@ -127,7 +127,7 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
                 activeTab === 2 &&
                 <section className="w-full h-full px-8 py-12">
                   <span className="text-3xl text-white font-istok-web font-extrabold">Participantes: </span>
-                  <div>
+                  <div className="max-h-96 overflow-y-auto">
                     <MemberCard 
                       name={props.room.createdBy.name}
                       isCreator

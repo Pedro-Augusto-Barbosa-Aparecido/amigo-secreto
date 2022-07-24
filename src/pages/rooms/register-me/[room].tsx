@@ -9,6 +9,7 @@ import Router from "next/router";
 import Spinner from "../../../components/Spinner";
 
 import GetRoomController from "../../../database/controllers/Room/GetRoomController";
+import classNames from "classnames";
 
 interface IRoomRegisterProps {
     id: string
@@ -23,19 +24,20 @@ interface IPerson {
 
 export default function RegisterPersonPage (props: IRoomRegisterProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [spinnerMessage, setSpinnerMessage] = useState<string>("Realizando seu registro no grupo");
+    const [spinnerMessage, setSpinnerMessage] = useState<string>("");
 
     const { register, handleSubmit } = useForm<IPerson>();
     
     const handleRegisterPerson = (data: IPerson) => {
+        setIsLoading(false);
+        setSpinnerMessage("Realizando seu registro no grupo");
         setIsLoading(true);
 
         api.post("/api/services/room/register-person/", {
             person: data,
             room: props.id
         }).then((res) => {
-            if (res.data.sucess){
-                setIsLoading(false);
+            if (res.data.sucess) {
                 Router.push(`/rooms/sucess/${props.id}`);
 
             }
@@ -47,11 +49,9 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
         <main className="w-full h-with-nav flex flex-col items-center justify-center">
             {
                 isLoading && 
-                <div>
-                    <Spinner 
-                        messageSpan={spinnerMessage}
-                    />
-                </div>
+                <Spinner 
+                    messageSpan={spinnerMessage}
+                />
             }
             <div
                 className="flex flex-col items-start justify-start w-3/12"
@@ -67,7 +67,12 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
                     className="w-full mt-12"
                     onSubmit={handleSubmit(handleRegisterPerson)}
                 >
-                    <div className="w-full relative">
+                    <div className={
+                        classNames(
+                            "w-full relative",
+                            { "-z-10": isLoading }
+                        )
+                    }>
                         <input 
                             {...register("name")}
                             id="name"
@@ -80,7 +85,12 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
                             className="absolute right-3 top-3 text-gray-600 opacity-75 text-2xl"
                         />
                     </div>
-                    <div className="w-full relative">
+                    <div className={
+                        classNames(
+                            "w-full relative",
+                            { "-z-10": isLoading }
+                        )
+                    }>
                         <input 
                             {...register("email")}
                             id="email"
