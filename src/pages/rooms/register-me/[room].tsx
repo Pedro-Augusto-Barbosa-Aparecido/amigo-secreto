@@ -1,8 +1,11 @@
 import { GetServerSideProps } from "next";
-import Router from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../../api";
+import { HiOutlineMail } from "react-icons/hi";
+import { MdDriveFileRenameOutline } from "react-icons/md";
+
+import Router from "next/router";
 import Spinner from "../../../components/Spinner";
 
 import GetRoomController from "../../../database/controllers/Room/GetRoomController";
@@ -34,7 +37,7 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
             if (res.data.sucess){
                 setIsLoading(false);
                 Router.push(`/rooms/sucess/${props.id}`);
-                
+
             }
         }).finally(() => setIsLoading(false));
 
@@ -64,7 +67,7 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
                     className="w-full mt-12"
                     onSubmit={handleSubmit(handleRegisterPerson)}
                 >
-                    <div className="w-full">
+                    <div className="w-full relative">
                         <input 
                             {...register("name")}
                             id="name"
@@ -73,8 +76,11 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
                             placeholder="Insira seu nome ou nickname..."
                             className="w-full outline-none border border-gray-900 shadow-sm shadow-slate-700 rounded py-3 px-4 font-istok-web placeholder:text-gray-500 placeholder:font-istok-web placeholder:italic"
                         />
+                        <MdDriveFileRenameOutline 
+                            className="absolute right-3 top-3 text-gray-600 opacity-75 text-2xl"
+                        />
                     </div>
-                    <div className="w-full">
+                    <div className="w-full relative">
                         <input 
                             {...register("email")}
                             id="email"
@@ -82,6 +88,9 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
                             required
                             placeholder="Insira seu email..."
                             className="w-full mt-2 outline-none border border-gray-900 shadow-sm shadow-slate-700 rounded py-3 px-4 font-istok-web placeholder:text-gray-500 placeholder:font-istok-web placeholder:italic"
+                        />
+                        <HiOutlineMail 
+                            className="absolute right-3 top-5 text-gray-600 opacity-75 text-2xl"
                         />
                     </div>
                     <button 
