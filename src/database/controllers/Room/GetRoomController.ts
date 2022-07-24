@@ -29,6 +29,10 @@ export default class GetRoomController {
             const room = await prismaClient.room.findUnique({ 
                 where: {
                     name: name
+                },
+                select: {
+                    id: true,
+                    name: true
                 }
             });
 
@@ -38,7 +42,8 @@ export default class GetRoomController {
                 }
 
             return {
-                notExist: false
+                notExist: false,
+                room
             }
 
         } catch (err) {
@@ -55,14 +60,18 @@ export default class GetRoomController {
         try {
             const rooms = await prismaClient.room.findMany({
                 where: {
-                    OR: {
-                        createdBy: userId,
-                        people: {
-                            every: {
-                                email: userEmail
+                    OR: [
+                        {
+                            createdBy: userId
+                        },
+                        {
+                            people: {
+                                every: {
+                                    email: userEmail
+                                }
                             }
                         }
-                    }
+                    ]
                 },
                 select: {
                     name: true,
