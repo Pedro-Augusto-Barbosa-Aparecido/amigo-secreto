@@ -21,6 +21,11 @@ body {
 
 }
 
+div.card-member span, div.card-member img {
+    border: 1px solid white;
+
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     width: 20px;
     height: 30px;

@@ -71,6 +71,7 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
                             height={70}
                             layout="responsive"
                             className="rounded-md"
+                            priority
                         />
                     </div>
                     <div className="h-36 flex font-semibold flex-col justify-end items-start pl-8 font-istok-web">
@@ -127,7 +128,7 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
                 activeTab === 2 &&
                 <section className="w-full h-full px-8 py-12">
                   <span className="text-3xl text-white font-istok-web font-extrabold">Participantes: </span>
-                  <div className="max-h-96 overflow-y-auto">
+                  <div className="max-h-96 grid grid-cols-3 gap-y-8 mt-4 overflow-y-auto">
                     <MemberCard 
                       name={props.room.createdBy.name}
                       isCreator

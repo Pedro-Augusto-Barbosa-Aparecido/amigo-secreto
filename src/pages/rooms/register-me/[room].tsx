@@ -38,7 +38,7 @@ export default function RegisterPersonPage (props: IRoomRegisterProps) {
             room: props.id
         }).then((res) => {
             if (res.data.sucess) {
-                Router.push(`/rooms/sucess/${props.id}`);
+                Router.push(`/rooms/sucess/${props.name.replaceAll(" ", "-")}`);
 
             }
         }).finally(() => setIsLoading(false));
