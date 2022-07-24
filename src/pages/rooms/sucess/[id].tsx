@@ -24,12 +24,12 @@ export default function SucessPage (props: IRoomSucessPageProps) {
             {
                 user?.token 
                 ? <Link href={"/"}>
-                    <a className="text-xl py-4 hover:bg-gray-back-100 rounded mt-8">
+                    <a className="text-xl py-4 px-8 bg-gray-400 hover:bg-gray-back-100 rounded mt-8">
                         Voltar para home
                     </a>
                 </Link> 
                 : <Link href={"/register"}>
-                    <a className="text-xl py-4 hover:bg-gray-back-100 rounded mt-8">
+                    <a className="text-xl py-4 px-8 bg-gray-400 hover:bg-gray-back-100 rounded mt-8">
                         Registre-se
                     </a>
                 </Link>    

@@ -111,7 +111,9 @@ export function NavBar () {
                                         <Link href={`/profile/${user.id}`}>
                                             <a className="text-xl mb-2">Minha Conta</a>
                                         </Link>
-                                        <button className="text-xl mb-2">Meus Grupos</button>
+                                        <Link href={`/`}>
+                                            <a className="text-xl mb-2">Meus Grupos</a>
+                                        </Link>
                                         <button className="text-xl" onClick={singOut}>Sair</button>
                                     </div>
                                 </div>

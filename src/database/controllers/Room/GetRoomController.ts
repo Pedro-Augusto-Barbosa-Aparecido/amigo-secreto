@@ -32,7 +32,14 @@ export default class GetRoomController {
                 },
                 select: {
                     id: true,
-                    name: true
+                    name: true,
+                    sorterDate: true,
+                    roomType: true,
+                    people: {
+                        select: {
+                            _count: true
+                        }
+                    }
                 }
             });
 
