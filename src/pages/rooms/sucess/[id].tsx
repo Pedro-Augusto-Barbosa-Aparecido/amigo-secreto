@@ -19,7 +19,7 @@ export default function SucessPage (props: IRoomSucessPageProps) {
                 Parabéns você está dentro!
             </h1>
             <p className="w-2/5 text-2xl">
-                Você concluiu o registro na sala "{props.roomName.replaceAll('-', ' ')}", agora basta aguardar o e-mail com o seu amigo secreto!
+                Você concluiu o registro na sala {props.roomName.replaceAll('-', ' ')}, agora basta aguardar o e-mail com o seu amigo secreto!
             </p>
             {
                 user?.token 
