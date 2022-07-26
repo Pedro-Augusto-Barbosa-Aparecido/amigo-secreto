@@ -8,10 +8,14 @@ import GetRoomController, { RoomGetReturn } from "../../database/controllers/Roo
 import classNames from "classnames";
 
 import Image from "next/image";
+import Spinner from "../../components/Spinner";
 import Link from "next/link";
+import { api } from "../../api";
 
-export default function RoomDetail (props: { room: RoomGetReturn }) {
+export default function RoomDetail (props: { room: RoomGetReturn, id: string }) {
     const [activeTab, setActiveTab] = useState<number>(1);
+    const [messageSpinner, setMessageSpinner] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleChangeTab = (tab: number) => {
       if ([1, 2].includes(tab)) 
@@ -32,6 +36,12 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
       <main
         className="w-full h-with-nav px-12 py-16"
       >
+        {
+          isLoading && 
+          <Spinner 
+            messageSpan={messageSpinner}
+          />
+        }
         <h1 className="text-6xl text-dark-orange-700 font-istok-web font-extrabold ml-8">Meus Grupos</h1>
         <div className='w-full flex items-center justify-center'>
             <div className='bg-blue-hv-200 w-11/12 h-tab rounded-nl mt-8'>
@@ -111,12 +121,23 @@ export default function RoomDetail (props: { room: RoomGetReturn }) {
                       className={
                         classNames(
                           "text-white font-istok-web font-semibold text-xl mt-4 w-full bg-dark-orange-700 py-2 rounded-md shadow-md shadow-gray-back-100 active:scale-90 hover:bg-opacity-80",
-                          { "cursor-not-allowed": !verifyIfCanSorter(props.room.sorterDate) }
+                          { /*"cursor-not-allowed": !verifyIfCanSorter(props.room.sorterDate)*/ }
                         )
                       }
-                      disabled={!verifyIfCanSorter(props.room.sorterDate)}
+                      // disabled={!verifyIfCanSorter(props.room.sorterDate)}
                       onClick={() => {
-                      
+                        setMessageSpinner("Realizando o sorteio e enviando os emails");
+                        setIsLoading(true);
+                        api.post("/api/services/send-emails/", {
+                          room: props.id
+                        }).then((res) => {
+                          if (res.data.err) {
+                            alert("deu ruim");
+                          } else {
+                            alert("Sorteio realizado com sucesso");
+                          }
+
+                        }).finally(() => setIsLoading(false));
                       }}
                     >
                       Sortear
@@ -180,7 +201,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     return {
       props: {
-        room: room._room
+        room: room._room,
+        id: id
       }
     }
 

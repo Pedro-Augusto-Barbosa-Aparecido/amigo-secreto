@@ -5,25 +5,139 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Email Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Istok Web', sans-serif;
+        box-sizing: border-box;
+
+        padding: 0;
+        margin: 0;
+        
+      }
+
+
+      #container {
+        height: 100vh;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+        align-items: center;
+
+      }
+
+      .header-message {
+        width: 700px;
+        height: 100px;
+
+        background-color: #F05321;
+
+        text-align: center;
+        
+        /* display: flex;
+
+        align-items: center;
+        justify-content: center; */
+
+        /* padding: 4rem; */
+
+        font-size: 16px;
+        color: white;
+
+      }
+
+      h1 {
+        /* margin-left: 24px; */
+        margin-top: 30px;
+
+      }
+
+      .body-message {
+        height: 400px;
+        width: 700px;
+
+        background-color: #024DA1;
+
+        padding: 64px 32px;
+
+      }
+
+      p {
+        font-size: 24px;
+
+        color: white;
+
+        font-weight: 300;
+
+      }
+
+      .title {
+        font-size: 30px;
+
+      }
+
+      .button {
+        padding: 10px 64px;
+        border-radius: 10px;
+
+        font-size: 20px;
+
+        border: 0;
+
+        color: white !important;
+        font-weight: bold;
+
+        font-family: 'Istok Web', sans-serif;
+
+        background-color: #F05321;
+
+        text-decoration: none;
+
+        box-shadow: 1px 2px 4px black;
+
+        cursor: pointer;
+
+        margin: auto;
+
+      }
+
+      .button:hover {
+        opacity: .8;
+
+      }
+
+      .button:active {
+        transform: scale(.9);
+
+      }
+
+    </style>
   </head>
   <body>
-    <header>
-        <h1>Hi, {{ name }}</h1>
-    </header>
-    <hr>
-    <main>
-        <p>Foi Realizado o sorteio do amigo secreto da sala {{ room }}, criada pelo {{ created }}</p>
-        <br>
-        <p>Seu Amigo Oculto é o {{ friend }}</p>
-    </main>
-    <hr>
-      <footer>
-        <p>Email gerado por <a href="https://amigo-secreto-theta.vercel.app/">amigo-secreto.vercel.app</a></p>
-        <!-- <div>
-            <p>Todos os direitos reservados para: </p>
-            <a href="https://www.linkedin.com/in/tainara-in%C3%A1cio-637657212/">Tainara</a>
-            <a href="https://www.linkedin.com/in/pedro-augusto-195247217/">Pedro Augusto</a>
-        </div> -->
-    </footer>
+    <div style="display: inline-block; margin: auto; text-align: center; width: 100%;">
+      <div class="header-message">
+        <h1 style="padding-top: 2rem;">Amigo Secreto de Konoha</h1>
+      </div>
+      <div class="body-message">
+        <p class="title">
+          <strong>{{ name }}</strong>, o sorteio do Grupo {{ room }} foi realizado.
+        </p>
+        <p style="margin-top: 32px;">
+          Clique no botão abaixo e veja o seu amigo secreto.
+        </p>
+        <span style="color: white;">(Verifique se não tem ninguem por perto)</span>
+        <div style="display: inline-block; text-align: center; width: 100%; margin-top: 4rem;">
+          <a id="button-sorter-result" class="button" href="{{ url }}">
+            Descubra
+          </a>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
