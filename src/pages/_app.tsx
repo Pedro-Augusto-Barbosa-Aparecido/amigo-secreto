@@ -7,6 +7,7 @@ import { AuthProvider } from '../context/Auth';
 import NextNProgress from 'nextjs-progressbar';
 
 import Head from 'next/head';
+import Link from "next/link";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -33,6 +34,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <NavBar />
         <Component {...pageProps} />
+        <div className='absolute bottom-0 left-0 mb-3 ml-4'>
+          <Link href="/credits">
+            <a className='text-md font-semibold hover:underline hover:text-blue-600'>
+              Conheça os desenvolvedores...
+            </a>
+          </Link>
+        </div>
       </AuthProvider>
     </>
   );
