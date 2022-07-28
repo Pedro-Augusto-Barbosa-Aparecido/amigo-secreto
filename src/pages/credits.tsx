@@ -1,5 +1,8 @@
 import { GetStaticProps } from "next";
 import { BsLinkedin, BsInstagram, BsGithub } from "react-icons/bs";
+import { AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
+
+import styles from "./register/styles.module.css";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -10,9 +13,9 @@ export default function Credits (props: {}) {
             className="w-full h-with-nav pl-24 pt-28"
         >
             <h1
-                className="text-5xl text-dark-orange-600 font-istok-web font-extrabold mb-4"
+                className="text-5xl text-dark-orange-600 font-istok-web font-extrabold mb-20"
             >
-                Desenvolvedores: 
+                Conheça os desenvolvedores: 
             </h1>
             <div
                 className="text-2xl font-istok-web"
@@ -25,25 +28,26 @@ export default function Credits (props: {}) {
                             height={100}
                             className="rounded-full"
                         />
-                        <h2 className="ml-4 text-md">Tainara Inácio</h2>
-                    </div>
-                    <div className="flex w-full">
-                        <Link href={"https://www.linkedin.com/in/tainara-in%C3%A1cio-637657212/"}>
-                            <a className="flex mt-8 hover:bg-blue-500 hover:bg-opacity-30 bg-gray-back-100 items-center rounded-md mr-4 py-4 px-8">
-                                <BsLinkedin 
-                                    className="mr-4 "
-                                />
-                                Linked In
-                            </a>
-                        </Link>
-                        <Link href={"https://instagram.com/inacio.design?igshid=YmMyMTA2M2Y="}>
-                            <a className="bg-gray-back-100 hover:bg-red-800 hover:bg-opacity-50 items-center rounded-md flex mt-8 py-4 px-8">
-                                <BsInstagram 
-                                    className="mr-4 "
-                                />
-                                Instagram
-                            </a>
-                        </Link>
+                        <div className="ml-4 ">
+                            <h2 className="text-md">Tainara Inácio</h2>
+                    
+                            <div className="flex w-full items-center mt-4">
+                                <Link href={"https://www.linkedin.com/in/tainara-in%C3%A1cio-637657212/"}>
+                                    <a className="">
+                                        <AiFillLinkedin 
+                                            className="mr-4 text-linkedin-100 text-5xl rounded-lg"
+                                        />
+                                    </a>
+                                </Link>
+                                <Link href={"https://instagram.com/inacio.design?igshid=YmMyMTA2M2Y="}>
+                                    <a className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-center">
+                                        <BsInstagram 
+                                            className="text-2xl text-white"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>  
                     </div>
                 </div>
                 <div className="flex mt-12 w-1/2 flex-col">
@@ -54,28 +58,41 @@ export default function Credits (props: {}) {
                             height={100}
                             className="rounded-full"
                         />
-                        <h2 className="ml-4 text-md">Pedro Augusto Barbosa Aparecido</h2>
-                    </div>
-                    <div className="flex w-full">
-                        <Link href={"https://www.linkedin.com/in/pedro-augusto-195247217"}>
-                            <a className="flex mt-8 hover:bg-blue-500 hover:bg-opacity-30 bg-gray-back-100 items-center rounded-md mr-4 py-4 px-8">
-                                <BsLinkedin 
-                                    className="mr-4 "
-                                />
-                                Linked In
-                            </a>
-                        </Link>
-                        <Link href={"https://github.com/Pedro-Augusto-Barbosa-Aparecido"}>
-                            <a className="bg-gray-back-100 hover:bg-black hover:bg-opacity-50 items-center rounded-md flex mt-8 py-4 px-12">
-                                <BsGithub 
-                                    className="mr-4 "
-                                />
-                                Github
-                            </a>
-                        </Link>
+                        <div className="ml-4 ">
+                            <h2 className="text-md">Pedro Augusto Barbosa Aparecido</h2>
+                            <div className="mt-4 flex items-center w-full">
+                                <Link href={"https://www.linkedin.com/in/pedro-augusto-195247217"}>
+                                    <a className="">
+                                        <AiFillLinkedin 
+                                            className="mr-4 text-linkedin-100 text-5xl rounded-lg"
+                                        />
+                                    </a>
+                                </Link>
+                                <Link href={"https://github.com/Pedro-Augusto-Barbosa-Aparecido"}>
+                                    <a className="">
+                                        <BsGithub 
+                                            className="mr-4 text-4xl"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <span 
+                className={`absolute bottom-0 right-0 ${styles.imgRegister}`}
+            >
+                <Image 
+                    src={"/imgs/img-background-register-s.png"}
+                    layout="fixed"
+                    width={560}
+                    height={470}
+                    alt={"Time 7 image, anime naruto"}
+                    priority
+                    
+                />
+            </span>
         </main>
     );
 

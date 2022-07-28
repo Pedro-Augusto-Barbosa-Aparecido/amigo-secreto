@@ -30,6 +30,9 @@ module.exports = {
           400: '#D9D9D926',
           500: '#F0F0F0',
           600: '#D9D9D9'
+        },
+        "linkedin": {
+          100: "#0077b7"
         }
       },
       borderRadius: {
@@ -45,7 +48,8 @@ module.exports = {
         'register': 'calc(100vh - 112px)',
         'with-nav': 'calc(100vh - 112px)',
         'tab': '35rem',
-        'item': '80px'
+        'item': '80px',
+        'img': '353px'
       },
       width: {
         'form-login': '482px'

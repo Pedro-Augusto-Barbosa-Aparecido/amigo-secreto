@@ -114,6 +114,11 @@ export function NavBar () {
                                         <Link href={`/`}>
                                             <a className="text-xl mb-2">Meus Grupos</a>
                                         </Link>
+                                        <Link href="/credits">
+                                            <a className='text-xl mb-2'>
+                                                Desenvolvedores
+                                            </a>
+                                        </Link>
                                         <button className="text-xl" onClick={singOut}>Sair</button>
                                     </div>
                                 </div>

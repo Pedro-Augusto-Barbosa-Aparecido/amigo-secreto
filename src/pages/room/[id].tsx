@@ -74,18 +74,22 @@ export default function RoomDetail (props: { room: RoomGetReturn, id: string }) 
                 activeTab === 1 && 
                 <section className="w-full h-full px-8 py-12">
                   <div className="flex">
-                    <div className="w-52 h-16">
+                    <div className="shadow-md shadow-slate-800 border border-white h-img rounded-md">
                         <Image
                             src={"/imgs/rooms-image/room-one.png"}
-                            width={"100%"}
-                            height={70}
-                            layout="responsive"
-                            className="rounded-md"
+                            width={280}
+                            height={350}
+                            layout="fixed"
+                            className=" rounded-md"
                             priority
                         />
                     </div>
-                    <div className="h-36 flex font-semibold flex-col justify-end items-start pl-8 font-istok-web">
-                      <span className="text-2xl text-dark-orange-600 mb-4">{ props.room.name }</span>
+                    <div className="h-80 flex font-semibold flex-col justify-center items-start pl-8 font-istok-web">
+                      <div className="flex w-full">
+                        <span className="text-dark-orange-600 text-xl">Nome do grupo: </span>
+                        <span className="text-white text-xl font-normal">&nbsp;&nbsp;{ props.room.name }</span>
+                      </div>
+                      {/* <span className="text-2xl text-dark-orange-600 mb-4">{ props.room.name }</span> */}
                       <div className="flex w-full">
                         <span className="text-dark-orange-600 text-xl">Tipo: </span>
                         <span className="text-white text-xl font-normal">&nbsp;&nbsp;{ props.room.roomType }</span>
@@ -97,51 +101,51 @@ export default function RoomDetail (props: { room: RoomGetReturn, id: string }) 
                         </span>
                         
                       </div>
-                    </div>
-                  </div>
-                  <div className="w-2/5 h-32 mt-12 flex flex-col py-8 px-6 bg-white rounded-md">
-                    <span className="text-2xl text-dark-orange-600 font-istok-web font-extrabold">Link do Grupo</span>
-                    <CopyToClipboard 
-                      text={`https://konan.vercel.app/rooms/register-me/${props.room.name.replaceAll(' ', '-')}`}
-                      onCopy={
-                        () => {
-                          alert("Link copiado à area de transferência!");
-                        }
-                      }
-                    >
-                      <button
-                        className="text-blue-700 text-xl underline block overflow-hidden text-ellipsis"
-                      >
-                        https://konan.vercel.app/rooms/register-me/{props.room.name.replaceAll(' ', '-')}
-                      </button>
-                    </CopyToClipboard>
-                  </div>
-                  <div className="w-2/5">
-                    <button 
-                      className={
-                        classNames(
-                          "text-white font-istok-web font-semibold text-xl mt-4 w-full bg-dark-orange-700 py-2 rounded-md shadow-md shadow-gray-back-100 active:scale-90 hover:bg-opacity-80",
-                          { /*"cursor-not-allowed": !verifyIfCanSorter(props.room.sorterDate)*/ }
-                        )
-                      }
-                      // disabled={!verifyIfCanSorter(props.room.sorterDate)}
-                      onClick={() => {
-                        setMessageSpinner("Realizando o sorteio e enviando os emails");
-                        setIsLoading(true);
-                        api.post("/api/services/send-emails/", {
-                          room: props.id
-                        }).then((res) => {
-                          if (res.data.err) {
-                            alert("deu ruim");
-                          } else {
-                            alert("Sorteio realizado com sucesso");
+                      <div className="w-full mt-12 flex flex-col rounded-md">
+                        <span className="text-2xl text-dark-orange-600 font-istok-web font-extrabold">Link do Grupo</span>
+                        <CopyToClipboard 
+                          text={`https://konan.vercel.app/rooms/register-me/${props.room.name.replaceAll(' ', '-')}`}
+                          onCopy={
+                            () => {
+                              alert("Link copiado à area de transferência!");
+                            }
                           }
+                        >
+                          <button
+                            className="text-white text-xl underline block overflow-hidden text-ellipsis"
+                          >
+                            https://konan.vercel.app/rooms/register-me/{props.room.name.replaceAll(' ', '-')}
+                          </button>
+                        </CopyToClipboard>
+                      </div>
+                      <div className="w-2/5">
+                        <button 
+                          className={
+                            classNames(
+                              "text-white font-istok-web font-semibold text-xl mt-4 w-full bg-dark-orange-700 py-2 rounded-md shadow-md shadow-gray-back-100 active:scale-90 hover:bg-opacity-80",
+                              { /*"cursor-not-allowed": !verifyIfCanSorter(props.room.sorterDate)*/ }
+                            )
+                          }
+                          // disabled={!verifyIfCanSorter(props.room.sorterDate)}
+                          onClick={() => {
+                            setMessageSpinner("Realizando o sorteio e enviando os emails");
+                            setIsLoading(true);
+                            api.post("/api/services/send-emails/", {
+                              room: props.id
+                            }).then((res) => {
+                              if (res.data.err) {
+                                alert("deu ruim");
+                              } else {
+                                alert("Sorteio realizado com sucesso");
+                              }
 
-                        }).finally(() => setIsLoading(false));
-                      }}
-                    >
-                      Sortear
-                    </button>
+                            }).finally(() => setIsLoading(false));
+                          }}
+                        >
+                          Fazer Sorteio
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </section> 
               }
