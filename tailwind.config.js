@@ -49,7 +49,8 @@ module.exports = {
         'with-nav': 'calc(100vh - 112px)',
         'tab': '35rem',
         'item': '80px',
-        'img': '353px'
+        'img': '353px',
+        'img-m': '103px'
       },
       width: {
         'form-login': '482px'
