@@ -90,6 +90,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     
         });
     } catch(err) {
+        console.log(err);
         return res.send({err})
 
     }
